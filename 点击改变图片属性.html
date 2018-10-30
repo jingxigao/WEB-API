@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="点击改变图片属性" id="btn">
+<img src="images/1.gif" alt="hhh" title="xxx" id="img">
+<script>
+    document.getElementById('btn').onclick=function (ev) {
+        var imgObjs = document.getElementsByTagName("img");
+        imgObjs[0].alt = "改了";
+        imgObjs[0].title = "现实吧";
+    }
+</script>
+</body>
+</html>
