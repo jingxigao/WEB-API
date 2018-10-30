@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="改变h标签的内容" id="btn">
+<div id="p1">我是原本的p标签</div>
+
+<script>
+    document.getElementById('btn').onclick=function (ev) {
+        document.getElementById('p1').innerText='new content! ';
+    };
+</script>
+</body>
+</html>

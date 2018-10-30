@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="https://www.baidu.com/" id="links">我是连接</a>
+<input type="button" id="btn" value="点我">
+<script>
+    document.getElementById('btn').onclick=function (ev) {
+        document.getElementById('links').href='https://translate.google.cn/?hl=zh-CN&tab=TT';
+        document.getElementById('links').innerText='谷歌翻译';
+    };
+</script>
+</body>
+</html>
