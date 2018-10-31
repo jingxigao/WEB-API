@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--阻止超链接默认跳转-->
+<a href="http://daohang.qq.com/?fr=shortcut" id="link" onclick="alert('haha'); return false;">上网导航1</a>
+<a href="http://daohang.qq.com/?fr=shortcut" id="link2" onclick="f1()">上网导航2</a>
+<script>
+    function f1() {
+        alert("guagua");
+        return false;
+    }
+</script>
+<a href="http://daohang.qq.com/?fr=shortcut" id="link3" >上网导航3</a>
+<script>
+    document.getElementById('link3').onclick=function (ev) {
+        alert("huahuahuahua");
+        return false;
+    }
+</script>
+</body>
+</html>
