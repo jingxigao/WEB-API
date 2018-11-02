@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box {
+            width: 450px;
+            margin: 200px auto;
+        }
+
+        #txt {
+            width: 350px;
+        }
+
+
+        #pop ul {
+            margin: 10px;
+            padding: 0;
+            width: 200px;
+            list-style-type: none;
+
+        }
+
+        #pop ul li {
+
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <input type="text" id="txt" value="">
+    <input type="button" value="搜索" id="btn">
+    <!--<div></div>-->
+</div>
+<script>
+    var keyWords = ["h冰冻四万年幼狮", "h苹果不再公布销量", "a万圣节惊悚妆女孩", "a逆行逼迫司机下跪", "c国内油价最大降幅", "c马龙退赛", "梅根王妃摸孕肚照", "青岛海关查获走私"];
+    document.getElementById('txt').onkeyup=function (ev) {
+
+        //每一次的键盘抬起都判断页面中有没有这个div
+        if (document.getElementById("dv")) {
+            //删除一次
+            document.getElementById("box").removeChild(document.getElementById("dv"));
+        }
+
+        //获取文本框输入的内容
+        var text = this.value;
+        //临时数组--空数组------->存放对应上的数据
+        var tempArr = [];
+        //把文本框输入的内容和数组中的每个数据对比
+        for (var i = 0; i < keyWords.length; i++) {
+            //是否是最开始出现的
+            if (keyWords[i].indexOf(text) == 0) {
+                tempArr.push(keyWords[i]);//追加
+            }
+        }
+
+        //如果文本框是空的,临时数组是空的,不用创建div
+        if (this.value.length == 0 || tempArr.length == 0) {
+            //如果页面中有这个div,删除这个div
+            if (document.getElementById("dv")) {
+                document.getElementById("box").removeChild(mdocument.getElementById("dv"));
+            }
+            return;//退出函数
+        }
+        //创建div,把div加入id为box的div中
+        var dvObj = document.createElement("div");
+        document.getElementById("box").appendChild(dvObj);
+        dvObj.id = "dv";
+        dvObj.style.width = "350px";
+        //dvObj.style.height="100px";//肯定是不需要的------
+        dvObj.style.border = "1px solid green";
+
+
+        //循环遍历临时数组,创建对应的p标签
+        for (var i = 0; i < tempArr.length; i++) {
+            //创建p标签
+            var pObj = document.createElement("p");
+            //把p加到div中
+            dvObj.appendChild(pObj);
+            setInnerText(pObj, tempArr[i]);
+            pObj.style.margin = 0;
+            pObj.style.padding = 0;
+            pObj.style.cursor = "pointer";
+            pObj.style.marginTop = "5px";
+            pObj.style.marginLeft = "5px";
+            //鼠标进入
+            pObj.onmouseover = onmouseover1;
+            //鼠标离开
+            pObj.onmouseout = onmouseout1;
+        }
+    };
+
+    function onmouseover1() {
+        this.style.backgroundColor = "yellow";
+    }
+
+    function onmouseout1() {
+        this.style.backgroundColor = "";
+    }
+</script>
+</body>
+</html>
