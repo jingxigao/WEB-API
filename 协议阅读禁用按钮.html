@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>协议阅读</title>
+</head>
+<body>
+<textarea name="" id="" cols="20" rows="10">此处是协议！需要阅读五秒后点击同意
+</textarea>
+<input type="button" value="请仔细阅读协议(5)" id="btn" disabled="disabled">
+<script>
+    var time = 5;
+    var timeID = setInterval(function () {
+        time--;
+        document.getElementById('btn').value = "请仔细阅读协议(" + time + ")";
+        if (time <= 0) {
+            clearInterval(timeID);
+            document.getElementById('btn').disabled = false;
+            document.getElementById('btn').value = "同意";
+        }
+    }, 1000);
+
+</script>
+</body>
+</html>
