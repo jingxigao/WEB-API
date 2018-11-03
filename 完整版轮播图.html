@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+
+        .all {
+            width: 500px;
+            height: 200px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .screen {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen li {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            float: left;
+        }
+
+        .screen ul {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3000px;
+        }
+
+        .all ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .all ol li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .all ol li.current {
+            background: #DB192A;
+        }
+
+        #arr {
+            display: none;
+        }
+
+        #arr span {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            margin-top: -20px;
+            background: #000;
+            cursor: pointer;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: '黑体';
+            font-size: 30px;
+            color: #fff;
+            opacity: 0.3;
+            border: 1px solid #fff;
+        }
+
+        #arr #right {
+            right: 5px;
+            left: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="all" id='box'>
+    <div class="screen"><!--相框-->
+        <ul>
+            <li><img src="images/1.jpg" width="500" height="200"/></li>
+            <li><img src="images/2.jpg" width="500" height="200"/></li>
+            <li><img src="images/3.jpg" width="500" height="200"/></li>
+            <li><img src="images/4.jpg" width="500" height="200"/></li>
+            <li><img src="images/5.jpg" width="500" height="200"/></li>
+        </ul>
+        <ol>
+        </ol>
+    </div>
+    <div id="arr"><span id="left">&lt;</span><span id="right">&gt;</span></div>
+</div>
+<script>
+    var box = document.getElementById('box');
+    var screen = box.children[0];
+    var screenWidth = screen.offsetWidth;
+    var ul = screen.children[0];
+    var list = ul.children;
+    var ol = screen.children[1];
+    var arr = document.getElementById('arr');
+    var index1=0;
+    for (var i = 0; i < list.length; i++) {
+        var liObj = document.createElement('li');
+        ol.appendChild(liObj);
+        liObj.innerText = (i + 1);
+        liObj.setAttribute('index', i);
+        liObj.onmouseover = function (ev) {
+          //改掉所有背景颜色
+            for(var j=0;j<ol.children.length;j++){
+                ol.children[j].removeAttribute('class');
+            }
+          //设置当前的背景颜色为current
+            this.className='current';
+            index1=this.getAttribute('index');
+            animate(ul,-index1*screenWidth);
+        };
+    }
+    ol.children[0].className = 'current';
+    var timeId= setInterval(clickRight,1000);
+    ul.appendChild(list[0].cloneNode(true));
+    box.onmouseover = function (ev) {
+        arr.style.display='block';
+        clearInterval(timeId);
+    };
+    box.onmouseout = function (ev) {
+        arr.style.display='none';
+        timeId= setInterval(clickRight,1000);
+    };
+
+    document.getElementById('right').onclick = clickRight;
+    function clickRight(ev) {
+        if (index1 == list.length - 1) {
+            ul.style.left = 0 + 'px';
+            index1 = 0;
+        }
+        index1++;
+        animate(ul, -index1 * screenWidth);
+        if (index1 == list.length - 1) {
+            ol.children[list.length - 2].className = '';
+            ol.children[0].className = 'current';
+        } else {
+            for (var j = 0; j < ol.children.length; j++) {
+                ol.children[j].removeAttribute('class');
+            }
+            ol.children[index1].className = 'current';
+        }
+    };
+    document.getElementById('left').onclick = function (ev) {
+        if (index1 == 0) {
+            index1 = 5;
+            ul.style.left = -index1 * screenWidth + 'px';
+
+        }
+        index1--;
+        animate(ul, -index1 * screenWidth);
+        for (var i = 0; i < ol.children.length; i++) {
+            ol.children[i].removeAttribute("class");
+        }
+        //当前的pic索引对应的按钮设置颜色
+        ol.children[index1].className = "current";
+    };
+
+    //设置任意的一个元素,移动到指定的目标位置
+    function animate(element, target) {
+        clearInterval(element.timeId);
+        //定时器的id值存储到对象的一个属性中
+        element.timeId = setInterval(function () {
+            //获取元素的当前的位置,数字类型
+            var current = element.offsetLeft;
+            //每次移动的距离
+            var step = 10;
+            step = current < target ? step : -step;
+            //当前移动到位置
+            current += step;
+            if (Math.abs(current - target) > Math.abs(step)) {
+                element.style.left = current + "px";
+            } else {
+                //清理定时器
+                clearInterval(element.timeId);
+                //直接到达目标
+                element.style.left = target + "px";
+            }
+        }, 10);
+    }
+</script>
+</body>
+</html>
