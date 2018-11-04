@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        ul {
+            list-style: none
+        }
+
+        body {
+            background-color: #333;
+        }
+
+        .nav {
+            width: 800px;
+            height: 42px;
+            margin: 100px auto;
+            background: url(images/rss.png) right center no-repeat;
+            background-color: #fff;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .nav li {
+            width: 83px;
+            height: 42px;
+            text-align: center;
+            line-height: 42px;
+            float: left;
+            cursor: pointer;
+        }
+
+        .nav span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 83px;
+            height: 42px;
+            background: url(images/cloud.gif) no-repeat;
+        }
+
+        ul {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <span id="cloud"></span>
+    <ul id="navBar">
+        <li>导航栏1</li>
+        <li>导航栏2</li>
+        <li>导航栏3</li>
+        <li>导航栏4</li>
+        <li>导航栏5</li>
+        <li>导航栏6</li>
+        <li>导航栏7</li>
+        <li>导航栏8</li>
+    </ul>
+</div>
+<script>
+    var cloud = document.getElementById('cloud');
+    var li = document.getElementById('navBar').children;
+    for (var i = 0; i < li.length; i++) {
+        li[i].onmouseover = mouseoverHandle;
+        li[i].onmouseout = mouseoutHandle;
+        li[i].onclick = clickHandle;
+    }
+    function mouseoverHandle() {
+        animate(cloud,this.offsetLeft);
+    }
+    var lastPosi=0;
+    function mouseoutHandle() {
+        animate(cloud,lastPosi);
+    }
+    function clickHandle() {
+        lastPosi=this.offsetLeft;
+    }
+    
+    
+    
+    //匀速动画
+    function animate(element, target) {
+        //清理定时器
+        clearInterval(element.timeId);
+        element.timeId = setInterval(function () {
+            //获取元素的当前位置
+            var current = element.offsetLeft;
+            //移动的步数
+            var step = (target - current) / 10;
+            step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            current += step;
+            element.style.left = current + "px";
+            if (current == target) {
+                //清理定时器
+                clearInterval(element.timeId);
+            }
+            //测试代码:
+            console.log("目标位置:" + target + ",当前位置:" + current + ",每次移动步数:" + step);
+        }, 20);
+    }
+</script>
+</body>
+</html>
